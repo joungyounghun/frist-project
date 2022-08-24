@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.servaMapper">
+	<insert id="serva_write" parameterType="serva_dto">
+		insert into service_answer values(answer_seq.nextval, #{question_seq}, #{answer_content})
+	</insert>
+	
+	<update id="serva_modify" parameterType="serva_dto">
+		update service_answer set answer_content=#{answer_content} where answer_seq=#{answer_seq}
+	</update>
+	
+	<delete id="serva_delete" parameterType="int">
+		delete service_answer where answer_seq=#{question_seq}
+	</delete>
+	
+	<select id="serva_view" parameterType="int" resultType="serva_dto">
+		select * from service_answer where question_seq=#{question_seq}
+	</select>
+	
+	<select id="serva_view_one" parameterType="int" resultType="serva_dto">
+		select * from service_answer where answer_seq=#{answer_seq}
+	</select>
+	
+	<select id="serva_exist" parameterType="int" resultType="int">
+		select count(*) as cnt from service_answer where question_seq=#{question_seq}
+	</select>
+</mapper>

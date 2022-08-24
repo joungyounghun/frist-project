@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.cartMapper">
+	<insert id="addCart">
+		insert into cart(mem_num, prod_num, cart_quan) values
+		(#{mem_num}, #{prod_num}, #{cart_quan})
+	</insert>
+	
+	<delete id="deleteCart">
+		delete from cart where cart_num=#{cart_num}
+	</delete>
+
+	<update id="modifyCount">
+		update cart set cart_quan=#{cart_quan} where cart_num=#{cart_num}
+	</update>
+	
+	<select id="getCart" resultType="cart.bean.CartDTO">
+		select a.cart_num, a.mem_num, a.prod_num, a.cart_quan, 
+		b.prod_name, b.prod_price
+		from cart a left outer join product b on a.prod_num = b.prod_num
+		where mem_num = #{mem_num}
+	</select>
+	
+	<select id="checkCart" resultType="cart.bean.CartDTO">
+		select * from cart
+		where mem_num = #{mem_num} and prod_num={prod_num}
+	</select>
+
+	<select id="cartList" parameterType="java.util.Map" resultType="dto">
+		<![CDATA[select cart_num, prod_num, mem_num, cart_quan from
+		(select rownum rn, tt* from
+		(select * from cart order by cart_num desc) tt)
+		where rn>=#{startNum} and rn<=#{endNum}]]>
+	
+	</select>
+
+	<select id="getTotalA" resultType="int">
+		select count(*) as cnt from cart
+	</select>
+</mapper>

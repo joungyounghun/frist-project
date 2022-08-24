@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>	
+	<typeAliases>
+		<typeAlias type="notice.bean.NoticeDTO" alias="notice_dto"/>
+		<typeAlias type="service_question.bean.ServqDTO" alias="servq_dto"/>
+		<typeAlias type="service_answer.bean.ServaDTO" alias="serva_dto"/>
+		<typeAlias type="member.bean.MemberDTO" alias="memberDTO"/>
+		<typeAlias type="order.bean.OrderDTO" alias="orderDTO"/>
+		<typeAlias type="product.bean.ProductDTO" alias="productDTO"/>
+		<typeAlias type="cart.bean.CartDTO" alias="cartDTO" />
+		<typeAlias type="houseboard.bean.HouseboardDTO" alias="hbDTO"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/notice-mapping.xml" />
+		<mapper resource="mybatis/servq-mapping.xml" />
+		<mapper resource="mybatis/serva-mapping.xml" />
+		<mapper resource="mybatis/member-mapping.xml" />
+		<mapper resource="mybatis/order-mapping.xml" />
+		<mapper resource="mybatis/cart-mapping.xml" />
+		<mapper resource="mybatis/product-mapping.xml" />
+		<mapper resource="mybatis/houseboard-mapping.xml" />
+	</mappers>
+</configuration>

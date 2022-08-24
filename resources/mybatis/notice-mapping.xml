@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.noticeMapper">
+	<insert id="notice_write" parameterType="notice_dto">
+		insert into notice values (notice_seq.nextval, #{notice_subject}, #{notice_content}, 0, sysdate)
+	</insert>
+	
+	<update id="view_hit" parameterType="int">
+		update notice set notice_hit = notice_hit+1 where notice_seq=#{notice_seq}	
+	</update>
+	
+	<update id="notice_modify" parameterType="notice_dto">
+		update notice set notice_subject=#{notice_subject}, notice_content=#{notice_content} 
+		where notice_seq=#{notice_seq}
+	</update>
+	
+	<delete id="notice_delete" parameterType="int">
+		delete notice where notice_seq=#{notice_seq}
+	</delete>
+	
+	<select id="get_total" resultType="int">
+		select count(*) as cnt from notice
+	</select>
+	
+	<select id="notice_view" parameterType="int" resultType="notice_dto">
+		select * from notice where notice_seq=#{notice_seq}
+	</select>
+	
+	<select id="notice_list" parameterType="java.util.Map" resultType="notice_dto">
+		<![CDATA[select notice_seq, notice_subject, notice_content, notice_hit,
+		to_char(notice_date, 'YYYY.MM.DD') as notice_date from (select rownum rn, tt.* from
+		(select * from notice order by notice_seq desc) tt) where rn>=#{startNum} and rn<=#{endNum}]]>
+	</select>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="mybatis.houseboardMapper">
+ 	<insert id="hb_write" parameterType="hbDTO">
+	 	insert into house_board values (house_num.nextval, #{house_type}, #{house_area},
+		#{house_style}, #{house_title}, #{house_content}, 0, sysdate, #{house_img}, #{mem_num})
+ 	</insert>
+ 	
+ 	<update id="hb_modify" parameterType="hbDTO">
+	 	update house_board set house_type=#{house_type}, house_area=#{house_area}, 
+	 	house_style=#{house_style}, house_title=#{house_title},	house_content=#{house_content},
+	 	house_img=#{house_img} where house_num=#{house_num}
+ 	</update>
+ 	
+ 	<update id="hb_hitup" parameterType="int">
+ 		update house_board set house_hits=house_hits+1 where house_num=#{house_num}
+ 	</update>
+ 	
+ 	<delete id="hb_delete" parameterType="int">
+ 		delete house_board where house_num=#{house_num}
+ 	</delete>
+ 	
+ 	<select id="hb_list" parameterType="java.util.Map" resultType="hbDTO">
+	 	<![CDATA[select * from (select rownum rn, tt.* from 
+	 	(select * from house_board order by house_num desc) tt)	where rn>=#{startNum} and rn<=#{endNum}]]>
+ 	</select> 	
+ 	
+ 	<select id="hb_view" parameterType="int" resultType="hbDTO">
+ 		select * from house_board where house_num=#{house_num}
+ 	</select>
+ 	
+ 	<select id="get_total" resultType="int">
+ 		select count(*) as cnt from house_board
+ 	</select>
+ </mapper>
